@@ -13,7 +13,7 @@ def pr_token():
     return token
 
 def filter():
-    files = os.listdir(r'C:\Users\Pudge228\Desktop\git_repos\lab4\src\notes')
+    files = os.listdir(r'C:\Users\Pudge228\Desktop\git_repos\lab5\src\notes')
     result = [0]
     ext = '.json'
     for filename in files:
@@ -25,7 +25,7 @@ def filter():
 def create():
     files = filter()
     name = int(len(files))
-    with open('C:\\Users\\Pudge228\\Desktop\\git_repos\\lab4\\src\\notes\\'+str(name)+'.json', 'w') as file:
+    with open('C:\\Users\\Pudge228\\Desktop\\git_repos\\lab5\\src\\notes\\'+str(name)+'.json', 'w') as file:
         a = Notes_text(id=name, text="")
         b = Notes_info(created=datetime.now(), updated=datetime.now())
         b = {k: str(v) for k,v in b.dict().items()}
@@ -47,7 +47,7 @@ def create_note(token: str):
 @api_router.get('/get_note')
 def get_note(token: str, id:int):
     if token == pr_token():
-        with open('C:\\Users\\Pudge228\\Desktop\\git_repos\\lab4\\src\\notes\\'+str(id)+'.json', "r") as file:
+        with open('C:\\Users\\Pudge228\\Desktop\\git_repos\\lab5\\src\\notes\\'+str(id)+'.json', "r") as file:
             notes = json.load(file)
         note = notes['note']
         a = Notes_text(id=note['id'], text=note['text'])
@@ -58,11 +58,11 @@ def get_note(token: str, id:int):
 @api_router.patch('/up_note')
 def up_note(token: str, id:int, text:str):
     if token == pr_token():
-        with open('C:\\Users\\Pudge228\\Desktop\\git_repos\\lab4\\src\\notes\\'+str(id)+'.json', "r") as file:
+        with open('C:\\Users\\Pudge228\\Desktop\\git_repos\\lab5\\src\\notes\\'+str(id)+'.json', "r") as file:
             notes = json.load(file)
         notes['note']['text'] = text
         notes['data']['updated'] = str(datetime.now())
-        with open('C:\\Users\\Pudge228\\Desktop\\git_repos\\lab4\\src\\notes\\'+str(id)+'.json', "w") as file:
+        with open('C:\\Users\\Pudge228\\Desktop\\git_repos\\lab5\\src\\notes\\'+str(id)+'.json', "w") as file:
             json.dump(notes, file)
         note = notes['note']
         a = Notes_text(id=note['id'], text=note['text'])
@@ -73,7 +73,7 @@ def up_note(token: str, id:int, text:str):
 @api_router.get('/get_info')
 def get_info(token: str, id:int):
     if token == pr_token():
-        with open('C:\\Users\\Pudge228\\Desktop\\git_repos\\lab4\\src\\notes\\'+str(id)+'.json', "r") as file:
+        with open('C:\\Users\\Pudge228\\Desktop\\git_repos\\lab5\\src\\notes\\'+str(id)+'.json', "r") as file:
             notes = json.load(file)
         note = notes['data']
         c_d = datetime.strptime(note['created'],"%Y-%m-%d %H:%M:%S.%f")
@@ -86,7 +86,7 @@ def get_info(token: str, id:int):
 @api_router.delete('/delete_note')
 def delete_note(token: str, id:int):
     if token == pr_token():
-        path = r'C:\Users\Pudge228\Desktop\git_repos\lab4\src\notes'+f'\{str(id)}.json'
+        path = r'C:\Users\Pudge228\Desktop\git_repos\lab5\src\notes'+f'\{str(id)}.json'
         try:
             os.remove(path)
             return f'Заметка {id} удалена'
